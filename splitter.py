@@ -37,11 +37,17 @@ def init(inputParam):
         sys.exit()
     return
 
+def createDirs(outputDir):
+    # Create directories
+    if not os.path.exists(outputDir):
+        os.makedirs(outputDir)
+
 ################## Main
 
 init(sys.argv)
 # Path to folder containing subdir 'Annotations' and 'JPEGImages'
 path = str(sys.argv[1])
+outputDir = path + "ImageSets/"
 pathAn = path + "Annotation/*.xml"
 
 # Check for Annotation subfolder
@@ -73,36 +79,41 @@ anSet2 = anFiles[set1+1:set1+1+set2]
 # Get third set
 anSet3 = anFiles[set2+1:set2+1+set3]
 
-print len(anSet1)
-print len(anSet2)
-print len(anSet3)
-
-print anSet1[0]
-
-# Create directories
-if not os.path.exists(path + "ImageSets/"):
-    os.makedirs(path + "ImageSets/")
+createDirs(outputDir)
 
 # Generating train.txt and trainval.txt
+fileTrain = open(outputDir + "train.txt", 'w+')
+fileTrainVal = open(outputDir + "trainval.txt", 'w+')
 for ele in anSet1:
     start = ele.find('/n') + 1
     end = ele.find('.xml', start)
     eleClean = ele[start:end]
-    print eleClean
-    break
+    fileTrain.write(eleClean)
+    fileTrain.write("\n")
+    fileTrainVal.write(eleClean)
+    fileTrainVal.write("\n")
 
 # Generating val.txt and trainval.txt
+fileVal = open(outputDir + "val.txt", 'w+')
 for ele in anSet2:
     start = ele.find('/n') + 1
     end = ele.find('.xml', start)
     eleClean = ele[start:end]
-    print eleClean
-    break
+    fileVal.write(eleClean)
+    fileVal.write("\n")
+    fileTrainVal.write(eleClean)
+    fileTrainVal.write("\n")
 
 # Generating test.txt
+fileTest = open(outputDir + "test.txt", 'w+')
 for ele in anSet3:
     start = ele.find('/n') + 1
     end = ele.find('.xml', start)
     eleClean = ele[start:end]
-    print eleClean
-    break
+    fileTest.write(eleClean)
+    fileTest.write("\n")
+
+fileVal.close()
+fileTrainVal.close()
+fileTrain.close()
+fileTest.close()
