@@ -1,6 +1,19 @@
 import os
 import sys
 import glob
+import random
+
+######################
+# Generates four files
+#
+# trainval.txt
+# test.txt
+# train.txt
+# val.txt
+#
+# location: ImageSets/
+######################
+
 
 def checkPath(path):
     if not os.path.isdir(path):
@@ -11,7 +24,7 @@ def checkPath(path):
 
 def init(inputParam):
     print "\n##############"
-    print "Pascal VOC style data-set splitter"
+    print "Pascal VOC style DATA-SET SPLITTER"
     print " by Markus Solbach "
     print "    solbach@cse.yorku.ca"
     print "##############\n"
@@ -36,7 +49,6 @@ checkPath(path + "Annotation/")
 
 anFiles = glob.glob(pathAn)
 total = len(anFiles)
-total = 4658
 eqSplit = total / 3.0
 
 set1 = total / 3
@@ -50,3 +62,47 @@ if (eqSplit - 3.0) > 0.5:
 
 print "Total files found: %i" % total
 print "Split into \n \ttrain-set: \t%i \n\tval-set: \t%i \n\ttest-set: \t%i" % (set1, set2, set3)
+
+# Shuffle elements in anFiles
+random.shuffle(anFiles)
+
+# Get first set
+anSet1 = anFiles[0:set1]
+# Get second set
+anSet2 = anFiles[set1+1:set1+1+set2]
+# Get third set
+anSet3 = anFiles[set2+1:set2+1+set3]
+
+print len(anSet1)
+print len(anSet2)
+print len(anSet3)
+
+print anSet1[0]
+
+# Create directories
+if not os.path.exists(path + "ImageSets/"):
+    os.makedirs(path + "ImageSets/")
+
+# Generating train.txt and trainval.txt
+for ele in anSet1:
+    start = ele.find('/n') + 1
+    end = ele.find('.xml', start)
+    eleClean = ele[start:end]
+    print eleClean
+    break
+
+# Generating val.txt and trainval.txt
+for ele in anSet2:
+    start = ele.find('/n') + 1
+    end = ele.find('.xml', start)
+    eleClean = ele[start:end]
+    print eleClean
+    break
+
+# Generating test.txt
+for ele in anSet3:
+    start = ele.find('/n') + 1
+    end = ele.find('.xml', start)
+    eleClean = ele[start:end]
+    print eleClean
+    break
