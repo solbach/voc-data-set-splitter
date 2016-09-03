@@ -61,7 +61,8 @@ set1 = total / 3
 set2 = set1
 set3 = total - (set1 + set2)
 
-if (eqSplit - 3.0) > 0.5:
+number_dec = eqSplit - int(eqSplit)
+if number_dec > 0.5:
     set1 = set1 + 1
     set2 = set2 + 1
     set3 = set3 - 2
