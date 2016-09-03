@@ -84,34 +84,44 @@ createDirs(outputDir)
 # Generating train.txt and trainval.txt
 fileTrain = open(outputDir + "train.txt", 'w+')
 fileTrainVal = open(outputDir + "trainval.txt", 'w+')
+count = 0
 for ele in anSet1:
+    count = count + 1
     start = ele.find('/n') + 1
     end = ele.find('.xml', start)
     eleClean = ele[start:end]
     fileTrain.write(eleClean)
-    fileTrain.write("\n")
     fileTrainVal.write(eleClean)
     fileTrainVal.write("\n")
+    if not count == len(anSet1):
+        fileTrain.write("\n")
+
 
 # Generating val.txt and trainval.txt
 fileVal = open(outputDir + "val.txt", 'w+')
+count = 0
 for ele in anSet2:
+    count = count + 1
     start = ele.find('/n') + 1
     end = ele.find('.xml', start)
     eleClean = ele[start:end]
     fileVal.write(eleClean)
-    fileVal.write("\n")
     fileTrainVal.write(eleClean)
-    fileTrainVal.write("\n")
+    if not count == len(anSet1):
+        fileVal.write("\n")
+        fileTrainVal.write("\n")
 
 # Generating test.txt
 fileTest = open(outputDir + "test.txt", 'w+')
+count = 0
 for ele in anSet3:
+    count = count + 1
     start = ele.find('/n') + 1
     end = ele.find('.xml', start)
     eleClean = ele[start:end]
     fileTest.write(eleClean)
-    fileTest.write("\n")
+    if not count == len(anSet1):
+        fileTest.write("\n")
 
 fileVal.close()
 fileTrainVal.close()
