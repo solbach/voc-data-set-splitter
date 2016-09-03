@@ -107,7 +107,7 @@ for ele in anSet2:
     eleClean = ele[start:end]
     fileVal.write(eleClean)
     fileTrainVal.write(eleClean)
-    if not count == len(anSet1):
+    if not count == len(anSet2):
         fileVal.write("\n")
         fileTrainVal.write("\n")
 
@@ -120,7 +120,7 @@ for ele in anSet3:
     end = ele.find('.xml', start)
     eleClean = ele[start:end]
     fileTest.write(eleClean)
-    if not count == len(anSet1):
+    if not count == len(anSet3):
         fileTest.write("\n")
 
 fileVal.close()
